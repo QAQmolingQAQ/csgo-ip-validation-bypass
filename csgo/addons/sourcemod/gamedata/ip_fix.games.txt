@@ -4,28 +4,37 @@
     {
         "Keys"
         {
-            // 需要写入的新字节：mov eax, 1; retn
-            "IPValidationBypass_Patch"
+            "AuthBypass_Patch"
             {
-                "windows"   "B8 01 00 00 00 C3"
-            }
-            // 用于验证的原始字节：push ebp; mov ebp, esp; sub esp, 48h
-            // 此部分可选，但建议保留以确保补丁应用于正确的位置
-            "IPValidationBypass_Check"
-            {
-                "windows"   "55 8B EC 83 EC 48"
+                "windows"   "EB"
             }
         }
+        
         "Offsets"
         {
-            // 补丁的绝对虚拟地址（VA）
-            "IPValidationBypass_Patch"
+            "AuthBypass_Patch"
             {
-                "windows"   "0x101BEFA0"
+                "windows"   "0x8D"
             }
-            "IPValidationBypass_Check"
+        }
+
+        "Addresses"
+        {
+            "AuthFailureCallback"
             {
-                "windows"   "0x101BEFA0"
+                "windows"
+                {
+                    "signature" "AuthFailureCallback"
+                }
+            }
+        }
+
+        "Signatures"
+        {
+            "AuthFailureCallback"
+            {
+                "library"   "engine"
+                "windows"   "\x55\x8B\xEC\x83\xE4\xF8\x81\xEC\x24\x02\x00\x00\x53\x56\x8B\xF1\x57"
             }
         }
     }
